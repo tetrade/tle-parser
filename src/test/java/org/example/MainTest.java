@@ -50,17 +50,18 @@ class MainTest {
         List<TLEData> result = parser.parse();
 
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/celestrak.org_NORAD_elements_gp.php_SPECIAL=gpz&FORMAT=tle.txt"));
-        String line;
-        List<String> expected = new ArrayList<String>();
-        while ((line = bufferedReader.readLine()) != null) {
-           expected.add(line);
-        }
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/celestrak.org_NORAD_elements_gp.php_SPECIAL=gpz&FORMAT=tle.txt"))) {
+            String line;
+            List<String> expected = new ArrayList<String>();
+            while ((line = bufferedReader.readLine()) != null) {
+                expected.add(line);
+            }
 
-        for (int i = 0; i < expected.size(); i += 3) {
-            assertThat(expected.get(i)).isEqualTo(result.get(i / 3).getName());
-            assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 3).getLine1());
-            assertThat(expected.get(i + 2)).isEqualTo(result.get(i / 3).getLine2());
+            for (int i = 0; i < expected.size(); i += 3) {
+                assertThat(expected.get(i)).isEqualTo(result.get(i / 3).getName());
+                assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 3).getLine1());
+                assertThat(expected.get(i + 2)).isEqualTo(result.get(i / 3).getLine2());
+            }
         }
     }
 
@@ -70,17 +71,18 @@ class MainTest {
         List<TLEData> result = parser.parse();
 
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/celestrak.org_NORAD_elements_gp.php_GROUP=spire&FORMAT=tle.txt"));
-        String line;
-        List<String> expected = new ArrayList<String>();
-        while ((line = bufferedReader.readLine()) != null) {
-            expected.add(line);
-        }
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/celestrak.org_NORAD_elements_gp.php_GROUP=spire&FORMAT=tle.txt"))) {
+            String line;
+            List<String> expected = new ArrayList<String>();
+            while ((line = bufferedReader.readLine()) != null) {
+                expected.add(line);
+            }
 
-        for (int i = 0; i < expected.size(); i += 2) {
-            assertThat(result.get(i / 2).getName()).isNull();
-            assertThat(expected.get(i)).isEqualTo(result.get(i / 2).getLine1());
-            assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 2).getLine2());
+            for (int i = 0; i < expected.size(); i += 2) {
+                assertThat(result.get(i / 2).getName()).isNull();
+                assertThat(expected.get(i)).isEqualTo(result.get(i / 2).getLine1());
+                assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 2).getLine2());
+            }
         }
     }
 
@@ -91,23 +93,24 @@ class MainTest {
         List<TLEData> result = parser.parse();
 
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/test-file3.txt"));
-        String line;
-        List<String> expected = new ArrayList<String>();
-        while ((line = bufferedReader.readLine()) != null) {
-            expected.add(line);
-        }
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("test-files/test-file3.txt"))) {
+            String line;
+            List<String> expected = new ArrayList<String>();
+            while ((line = bufferedReader.readLine()) != null) {
+                expected.add(line);
+            }
 
-        for (int i = 0; i < 9; i += 3) {
-            assertThat(expected.get(i)).isEqualTo(result.get(i / 3).getName());
-            assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 3).getLine1());
-            assertThat(expected.get(i + 2)).isEqualTo(result.get(i / 3).getLine2());
-        }
+            for (int i = 0; i < 9; i += 3) {
+                assertThat(expected.get(i)).isEqualTo(result.get(i / 3).getName());
+                assertThat(expected.get(i + 1)).isEqualTo(result.get(i / 3).getLine1());
+                assertThat(expected.get(i + 2)).isEqualTo(result.get(i / 3).getLine2());
+            }
 
-        for (int i = 9; i < expected.size(); i += 2) {
-            assertThat(result.get(3 + (i - 9) / 2).getName()).isNull();
-            assertThat(expected.get(i)).isEqualTo(result.get(3 + (i - 9) / 2).getLine1());
-            assertThat(expected.get(i + 1)).isEqualTo(result.get(3 + (i - 9) / 2).getLine2());
+            for (int i = 9; i < expected.size(); i += 2) {
+                assertThat(result.get(3 + (i - 9) / 2).getName()).isNull();
+                assertThat(expected.get(i)).isEqualTo(result.get(3 + (i - 9) / 2).getLine1());
+                assertThat(expected.get(i + 1)).isEqualTo(result.get(3 + (i - 9) / 2).getLine2());
+            }
         }
     }
 }
