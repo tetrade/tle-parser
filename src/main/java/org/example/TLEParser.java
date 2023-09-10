@@ -23,13 +23,13 @@ public class TLEParser {
 
     public TLEParser(File file) throws IOException {
 
-        File orekitData = new File("orekit-data-master");
+        File orekitData = new File("src/main/resources/orekit-data-master");
         DataProvidersManager manager = DataProvidersManager.getInstance();
         manager.addProvider(new DirectoryCrawler(orekitData));
 
         stringFileDeque = new ArrayDeque<>();
 
-        try (BufferedReader  reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 stringFileDeque.addLast(line);
@@ -38,6 +38,8 @@ public class TLEParser {
             logger.log(Level.WARNING, "File not found", e);
             throw new IOException("File not found");
         }
+
+
     }
 
     public TLEParser(String path) throws IOException {
@@ -45,6 +47,12 @@ public class TLEParser {
     }
 
     public List<TLEData> parse() throws DataFormatException {
+
+        if (stringFileDeque.size() < 2) {
+            logger.log(Level.WARNING, "File can't have less than 2 lines");
+            stringFileDeque.clear();
+            throw new DataFormatException("File can't have less than 2 lines");
+        }
 
         List<TLEData> data = new ArrayList<>();
 
@@ -66,6 +74,7 @@ public class TLEParser {
                 }
             }
         }
+
         return data;
     }
 }

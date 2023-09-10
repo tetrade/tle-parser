@@ -1,12 +1,13 @@
 package org.example;
 
 import javax.swing.*;
+
 import java.io.*;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
 public class Main {
-    public static void main( String[] args ) throws DataFormatException, IOException {
+    public static void main(String[] args) throws DataFormatException, IOException {
 
 
         JFileChooser fileChooser = new JFileChooser();
@@ -17,7 +18,9 @@ public class Main {
             TLEParser tleParser = new TLEParser(file);
             List<TLEData> data = tleParser.parse();
 
-            for (TLEData tle : data) { System.out.println(tle); }
+            for (TLEData tle : data) {
+                System.out.println(tle);
+            }
         }
 
     }
